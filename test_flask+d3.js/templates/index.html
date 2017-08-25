@@ -1,0 +1,43 @@
+<html>
+    <head>
+		<meta charset="utf-8">
+		<title>Test Project</title>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
+	<script src="http://datamaps.github.io/scripts/0.4.4/datamaps.world.min.js"></script>
+	<div id="container" style="position: relative; width: 1200px; height: 600px;"></div>	
+    </head>
+    <body>
+	<script>
+		var map = new Datamap({
+        element: document.getElementById('container'),
+        fills: {
+            HIGH: '#afafaf',
+            LOW: '#123456',
+            MEDIUM: 'blue',
+            UNKNOWN: 'rgb(0,0,0)',
+            defaultFill: 'green'
+        	},
+        data: {
+            {% for c in country %}
+            {{c.id_code|tojson}}:{
+				fillKey: {{c.color|tojson}},
+                cost: {{c.lendprojectcost}},
+				projects: "{{c.project_name}}"
+            	},
+			{% endfor %}
+        	},
+			geographyConfig: {
+            popupTemplate: function(geo, data) {
+                return ['<div class="hoverinfo"><strong>',
+                        'Total projects cost in ' + geo.properties.name,
+                        ': ' + data.cost+'$'+'<br>'+data.projects,
+                        '</strong></div>'].join('');
+            			}
+        	}
+    	});
+
+	</script>
+    </body>
+</html>
+

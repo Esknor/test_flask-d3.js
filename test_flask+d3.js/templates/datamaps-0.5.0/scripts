@@ -1,0 +1,6 @@
+<script>
+	var countries = Datamap.prototype.worldTopo.objects.world.geometries;
+	for (var i = 0, j = countries.length; i < j; i++) {
+  	console.log(countries[i].properties);
+	}
+	</script>
